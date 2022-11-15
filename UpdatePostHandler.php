@@ -51,9 +51,10 @@ final class UpdatePostHandler implements PostUpdater, EventDispatcher
         }
     }
 
-    public function update(BlogPostDTO $blogPostDTO): UpdatePost
+    public function update(BlogPostDTO $blogPostDTO): void
     {
-        return UpdatePost::updateFromDTO($blogPostDTO);
+        $command = UpdatePost::updateFromDTO($blogPostDTO);
+        $this->handleCommand($command);
     }
 
     public function dispatch(Event $event): BlogPostDTO|null
