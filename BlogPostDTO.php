@@ -2,12 +2,23 @@
 declare(strict_types=1);
 namespace App\Task;
 
+use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
+
 class BlogPostDTO implements \JsonSerializable
 {
+    #[ORM\Column(type: Types::INTEGER)]
     public int $postId;
+
+    #[ORM\Column(type: Types::INTEGER)]
     public int $userId;
+
+    #[ORM\Column(type: Types::STRING)]
     #[Assert\Length(max: 20)]
+    #[Assert\NotBlank(message: 'post.blank')]
     public string $title;
+    
+    #[ORM\Column(type: Types::TEXT)]
     public string $content;
 
     public static function updateFromEntity(BlogPost $blogPost): BlogPostDTO
